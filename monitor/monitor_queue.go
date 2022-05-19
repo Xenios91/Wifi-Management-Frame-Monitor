@@ -8,7 +8,7 @@ import (
 
 var (
 	once          sync.Once
-	Monitor_Queue MonitorQueue
+	Monitor_Queue *MonitorQueue
 )
 
 type MonitorQueue struct {
@@ -19,10 +19,10 @@ type MonitorQueue struct {
 func New() *MonitorQueue {
 	once.Do(func() {
 		queue := make(chan *management_frame.ManagementFrame)
-		Monitor_Queue = MonitorQueue{queue: queue, activityLog: make(map[string]accessPoint)}
+		Monitor_Queue = &MonitorQueue{queue: queue, activityLog: make(map[string]accessPoint)}
 		go Monitor_Queue.startService()
 	})
-	return &Monitor_Queue
+	return Monitor_Queue
 }
 
 func (mq *MonitorQueue) AddToQueue(mf *management_frame.ManagementFrame) {

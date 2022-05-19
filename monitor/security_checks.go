@@ -6,9 +6,9 @@ import (
 )
 
 func checkForRogue(management_frame *management_frame.ManagementFrame) bool {
-	apOfInterest := Monitor_Queue.activityLog[management_frame.APName]
+	apOfInterest := Monitor_Queue.activityLog[management_frame.Essid]
 	for i := 0; i < len(apOfInterest.bssid); i++ {
-		if apOfInterest.bssid[i] == management_frame.BSSID {
+		if apOfInterest.bssid[i] == management_frame.Bssid {
 			return false
 		}
 	}
@@ -16,11 +16,11 @@ func checkForRogue(management_frame *management_frame.ManagementFrame) bool {
 }
 
 func checkForDeauth(management_frame *management_frame.ManagementFrame) bool {
-	monitor_item := Monitor_Queue.activityLog[management_frame.APName]
+	monitor_item := Monitor_Queue.activityLog[management_frame.Essid]
 	currentDeauth := monitor_item.deauthCount
 	if currentDeauth >= 50 {
 		monitor_item.deauthCount = 0
-		Monitor_Queue.activityLog[management_frame.APName] = monitor_item
+		Monitor_Queue.activityLog[management_frame.Essid] = monitor_item
 		return true
 	}
 
@@ -32,6 +32,6 @@ func checkForDeauth(management_frame *management_frame.ManagementFrame) bool {
 		monitor_item.deauthCount++
 	}
 
-	Monitor_Queue.activityLog[management_frame.APName] = monitor_item
+	Monitor_Queue.activityLog[management_frame.Essid] = monitor_item
 	return false
 }
