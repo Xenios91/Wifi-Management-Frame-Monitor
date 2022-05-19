@@ -30,7 +30,12 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func loadConfig() {
+	monitor.LoadAccessPoints()
+}
+
 func main() {
+	loadConfig()
 	http.HandleFunc("/addToQueue", handleRequest)
 	log.Fatal(http.ListenAndServe(":9001", nil))
 }
