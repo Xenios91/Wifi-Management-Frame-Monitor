@@ -1,15 +1,16 @@
 package monitor
 
 import (
-	"fmt"
 	"strings"
 	"sync"
 	management_frame "wifi-management-frame-monitor/management_frame"
+	"wifi-management-frame-monitor/notification"
 )
 
 var (
 	once          sync.Once
 	Monitor_Queue *MonitorQueue
+	nq            *notification.NotificationQueue = notification.NewNotificationQueue()
 )
 
 type essid string
@@ -35,13 +36,15 @@ func (mq *MonitorQueue) AddToQueue(mf *management_frame.ManagementFrame) {
 func (mq *MonitorQueue) auditManagementFrame(mf *management_frame.ManagementFrame) {
 	switch strings.ToLower(mf.FrameType) {
 	case "deauth":
-		isDeauthAttack := checkForDeauth(mf)
-		fmt.Println(isDeauthAttack)
-		//send alert
+		if isDeauthAttack := checkForDeauth(mf); isDeauthAttack {
+			nq.AddNotification("deauth", mf)
+		}
+
 	case "beacon":
-		isRogue := checkForRogue(mf)
-		fmt.Println(isRogue)
-		//send alert
+		if isRogue := checkForRogue(mf); isRogue {
+			nq.AddNotification("rogue", mf)
+		}
+
 	default:
 		break
 	}

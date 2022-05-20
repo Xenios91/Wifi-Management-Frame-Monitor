@@ -4,10 +4,18 @@ import (
 	"encoding/json"
 	"log"
 	"sync"
+	"time"
+	"wifi-management-frame-monitor/management_frame"
 )
 
 type NotificationQueue struct {
-	notifications []string
+	notifications map[string]map[string]Notification
+}
+
+type Notification struct {
+	NotificationType string
+	AssociatedEssid  string
+	Time             time.Time
 }
 
 var (
@@ -15,19 +23,23 @@ var (
 	Notification_Queue *NotificationQueue
 )
 
-func New() *NotificationQueue {
+func NewNotificationQueue() *NotificationQueue {
 	once.Do(func() {
-		notifications := make([]string, 0)
+		notifications := make(map[string]map[string]Notification)
 		Notification_Queue = &NotificationQueue{notifications}
 	})
 	return Notification_Queue
 }
 
-func (nq *NotificationQueue) addNotification(notification string) {
-	nq.notifications = append(nq.notifications, notification)
+func (nq *NotificationQueue) AddNotification(notificationType string, mf *management_frame.ManagementFrame) {
+	notification := &Notification{NotificationType: notificationType, AssociatedEssid: mf.Essid, Time: time.Now()}
+	if _, ok := nq.notifications[mf.Essid]; !ok {
+		nq.notifications[mf.Essid] = make(map[string]Notification)
+	}
+	nq.notifications[mf.Essid][notificationType] = *notification
 }
 
-func (nq *NotificationQueue) sendNotifications() *string {
+func (nq *NotificationQueue) GetNotifications() *string {
 	bytes, err := json.Marshal(nq.notifications)
 	if err != nil {
 		log.Fatalln(err)
