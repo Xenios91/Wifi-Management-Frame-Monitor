@@ -23,7 +23,9 @@ func handleAddToQueue(w http.ResponseWriter, r *http.Request) {
 
 		err = json.Unmarshal(body, &mf)
 		if err != nil {
-			log.Fatalln(err)
+			log.Println(err)
+			http.Error(w, "", http.StatusBadRequest)
+			return
 		}
 
 		monitorQueue.AddToQueue(&mf)
@@ -37,6 +39,8 @@ func handleGetNotifications(w http.ResponseWriter, r *http.Request) {
 		notifications := notification.NewNotificationQueue().GetNotifications()
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(notifications)
+	} else {
+		http.Error(w, "", http.StatusMethodNotAllowed)
 	}
 }
 
