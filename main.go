@@ -16,7 +16,9 @@ func handleAddToQueue(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			log.Fatalln(err)
+			log.Println(err)
+			http.Error(w, "", http.StatusBadRequest)
+			return
 		}
 
 		var mf management_frame.ManagementFrame

@@ -42,7 +42,7 @@ func (nq *NotificationQueue) AddNotification(notificationType string, mf *manage
 func (nq *NotificationQueue) GetNotifications() *string {
 	bytes, err := json.Marshal(nq.notifications)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 	jsonBytes := string(bytes)
 	return &jsonBytes
