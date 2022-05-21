@@ -37,12 +37,12 @@ func (mq *MonitorQueue) auditManagementFrame(mf *management_frame.ManagementFram
 	switch strings.ToLower(mf.FrameType) {
 	case "deauth":
 		if isDeauthAttack := checkForDeauth(mf); isDeauthAttack {
-			nq.AddNotification("deauth", mf)
+			nq.AddNotification("deauth attack detected", mf)
 		}
 
 	case "beacon":
 		if isRogue := checkForRogue(mf); isRogue {
-			nq.AddNotification("rogue", mf)
+			nq.AddNotification("rouge ap detected", mf)
 		}
 
 	default:
