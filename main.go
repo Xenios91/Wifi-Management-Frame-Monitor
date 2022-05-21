@@ -10,22 +10,23 @@ import (
 	"wifi-management-frame-monitor/notification"
 )
 
-var Monitor_Queue = monitor.New()
+var monitorQueue = monitor.New()
 
 func handleAddToQueue(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
-		var mf management_frame.ManagementFrame
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			log.Fatalln(err)
 		}
+
+		var mf management_frame.ManagementFrame
 
 		err = json.Unmarshal(body, &mf)
 		if err != nil {
 			log.Fatalln(err)
 		}
 
-		Monitor_Queue.AddToQueue(&mf)
+		monitorQueue.AddToQueue(&mf)
 	} else {
 		http.Error(w, "", http.StatusMethodNotAllowed)
 	}
