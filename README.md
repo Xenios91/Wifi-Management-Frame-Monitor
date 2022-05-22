@@ -1,5 +1,5 @@
 # Wifi-Management-Frame-Monitor
-##General Information
+## General Information
 - Author: Corey Hartman
 - Language: Golang v1.17
 - Description: The Wifi-Management-Frame-Monitor is capable of receiving json post request representative of management
@@ -7,7 +7,7 @@
 
  ##Video URL
 
- ##Installation
+ ## Installation
  - Requires Golang 1.17
  - Within the root directory run ```go build .```
 
