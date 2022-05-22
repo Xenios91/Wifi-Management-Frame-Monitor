@@ -41,8 +41,8 @@ func (mq *MonitorQueue) auditManagementFrame(mf *management_frame.ManagementFram
 		}
 
 	case "beacon":
-		if isRogue := checkForRogue(mf); isRogue {
-			nq.AddNotification("rogue ap detected", mf)
+		if isEvilTwin := checkForEvilTwin(mf); isEvilTwin {
+			nq.AddNotification("evil twin detected", mf)
 		}
 
 	default:

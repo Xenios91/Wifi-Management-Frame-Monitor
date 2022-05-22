@@ -8,7 +8,7 @@ import (
 	"wifi-management-frame-monitor/management_frame"
 )
 
-func checkForRogue(management_frame *management_frame.ManagementFrame) bool {
+func checkForEvilTwin(management_frame *management_frame.ManagementFrame) bool {
 	apOfInterest := Monitor_Queue.activityLog[essid(management_frame.Essid)]
 	if _, ok := Monitor_Queue.activityLog[essid(apOfInterest.essid)]; !ok {
 		return false
