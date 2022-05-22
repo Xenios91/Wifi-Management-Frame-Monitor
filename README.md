@@ -12,4 +12,4 @@
  - Within the root directory run ```go build .```
 
 
- See [https://github.com/Xenios91/Wifi-Management-Frame-Monitor/blob/main/monitor_tool_swagger.pdf](monitor_tool_swagger.pdf) for the API documentation
+ See (https://github.com/Xenios91/Wifi-Management-Frame-Monitor/blob/main/monitor_tool_swagger.pdf)[monitor_tool_swagger.pdf] for the API documentation
