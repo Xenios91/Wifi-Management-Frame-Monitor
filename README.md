@@ -11,6 +11,6 @@
  - Requires Golang 1.17
  - Within the root directory run ```go build .```
 
-## API Dpcumentation
+## API Documentation
 
 https://github.com/Xenios91/Wifi-Management-Frame-Monitor/blob/main/monitor_tool_swagger.pdf
