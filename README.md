@@ -6,6 +6,7 @@
  frames receieved by a passive listening device for 802.11. Upon receiving the management frame, the tool will check known wireless access points against the management frame to determine if it is a rogue access point, or if there is a flood of deauthentication frames indicating a potential deauthentication attack. Upon detection, the notification queue will be populated with the alert allowing a request to the tools API to get information on the attack, such as time and the associated ESSID.
 
  ## Video URL
+https://youtu.be/ebdLkbrUkBM
 
  ## Installation
  - Requires Golang 1.17
