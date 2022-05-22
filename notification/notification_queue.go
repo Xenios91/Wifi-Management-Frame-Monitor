@@ -12,10 +12,28 @@ type NotificationQueue struct {
 	notifications map[string]map[string]Notification
 }
 
-type Notification struct {
+type Notification interface {
+	SetNotificationType(*string)
+	SetAssociatedEssid(*string)
+	SetTimeStamp(time.Time)
+}
+
+type NotificationItem struct {
 	NotificationType string
 	AssociatedEssid  string
-	Time             time.Time
+	TimeStamp        time.Time
+}
+
+func (notificationItem *NotificationItem) SetNotificationType(notificationType *string) {
+	notificationItem.NotificationType = *notificationType
+}
+
+func (notificationItem *NotificationItem) SetAssociatedEssid(notificationEssid *string) {
+	notificationItem.AssociatedEssid = *notificationEssid
+}
+
+func (notificationItem *NotificationItem) SetTimeStamp(notificationTimeStamp time.Time) {
+	notificationItem.TimeStamp = notificationTimeStamp
 }
 
 var (
@@ -32,11 +50,11 @@ func NewNotificationQueue() *NotificationQueue {
 }
 
 func (nq *NotificationQueue) AddNotification(notificationType string, mf *management_frame.ManagementFrame) {
-	notification := &Notification{NotificationType: notificationType, AssociatedEssid: mf.Essid, Time: time.Now()}
+	notification := &NotificationItem{NotificationType: notificationType, AssociatedEssid: mf.Essid, TimeStamp: time.Now()}
 	if _, ok := nq.notifications[mf.Essid]; !ok {
 		nq.notifications[mf.Essid] = make(map[string]Notification)
 	}
-	nq.notifications[mf.Essid][notificationType] = *notification
+	nq.notifications[mf.Essid][notificationType] = notification
 }
 
 func (nq *NotificationQueue) GetNotifications() *string {
