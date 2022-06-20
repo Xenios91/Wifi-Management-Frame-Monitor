@@ -1,4 +1,7 @@
 # Wifi-Management-Frame-Monitor
+
+[![CodeQL](https://github.com/Xenios91/Wifi-Management-Frame-Monitor/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Xenios91/Wifi-Management-Frame-Monitor/actions/workflows/codeql-analysis.yml)
+
 ## General Information
 - Author: Corey Hartman
 - Language: Golang v1.17
